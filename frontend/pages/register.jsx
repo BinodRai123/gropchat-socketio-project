@@ -1,15 +1,27 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { registerUser } from "../store/actions/userAction";
 
 const Register = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
+  const [responseMessage, setResponseMessage] = useState("");
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    
+  const onSubmit = async (data) => {
+    try {
+      const response = await registerUser(data);
+      navigate("/chat");
+      reset();
+      
+    } catch (error) {
+      setResponseMessage(error);
+    }
   };
 
   return (
@@ -83,6 +95,7 @@ const Register = () => {
             </form>
 
             <small>Already have Account <NavLink to="/login" className="text-sm underline font-bold text-blue-500">Login</NavLink> </small>
+            <p className="text-xl text-red-600">{responseMessage}</p>
           </div>
       </div>
   );
