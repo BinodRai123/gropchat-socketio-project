@@ -20,7 +20,11 @@ async function authRegister(req, res){
     })
 
     const token = await jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY);
-    res.cookie("token", token);
+    res.cookie("token", token, {
+        httpOnly: true,       
+        secure: false,    
+        sameSite: "Strict"
+    });
 
     res.status(201).json({
         message:"user register sucessfully",
@@ -54,7 +58,11 @@ async function authLogin(req, res){
     }
 
     const token = jwt.sign({id: user._id}, process.env.JWT_SECRET_KEY);
-    res.cookie("token",token);
+    res.cookie("token",token, {
+        httpOnly: true,       
+        secure: false,    
+        sameSite: "Strict"
+    });
 
     res.status(200).json({
         message:"login sucessfully",
@@ -66,7 +74,21 @@ async function authLogin(req, res){
     })
 }
 
+async function userActive(req,res){
+    const token = req.cookies.token;
+
+    if (!token) return res.status(401).json({ message: "Not logged in" });
+
+    try {
+        const id = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        res.json({ id });
+    } catch (err) {
+        res.status(401).json({ message: "Invalid token" });
+    }
+}
+
 module.exports = {
     authRegister,
-    authLogin
+    authLogin,
+    userActive
 }
