@@ -9,7 +9,7 @@ async function authRegister(req, res){
 
     if(isUserAlreadyExist){
         return res.status(401).json({
-            message: "user is already exist"
+            message: "This Email User Already Exist"
         })
     }
 

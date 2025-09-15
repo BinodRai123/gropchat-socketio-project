@@ -15,12 +15,13 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
+      console.log(data)
       const response = await registerUser(data);
       navigate("/chat");
       reset();
       
     } catch (error) {
-      setResponseMessage(error);
+      setResponseMessage(error.response?.data?.message || "");
     }
   };
 

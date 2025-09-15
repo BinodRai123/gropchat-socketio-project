@@ -1,15 +1,21 @@
 // src/Login.js
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { loginUser } from '../store/actions/userAction';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    alert('Login successful! Check the console for data.');
-    // Here you would typically send the data to a backend API for verification
+  const onSubmit = async(data) => {
+    try {
+      await loginUser(data);
+      navigate("/chat");
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || "");
+    }
   };
 
   return (
@@ -45,6 +51,7 @@ const Login = () => {
           </button>
         </form>
         <small>Don't have an Account: <NavLink to="/register" className="text-blue-800 text-sm underline">Register</NavLink></small>
+        <p className='text-xl text-red-500'>{errorMessage}</p>
       </div>
     </div>
   );
