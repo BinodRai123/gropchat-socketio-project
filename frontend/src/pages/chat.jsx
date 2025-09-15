@@ -1,9 +1,12 @@
+import { useContext } from "react"
+import { context } from "../wrapper"
 
 
 const Chat = () => {
+  const [user, setUser] = useContext(context);
   return (
-    <div>
-      chat      
+    <div className="text-2xl">
+      Name: {user}
     </div>
   )
 }

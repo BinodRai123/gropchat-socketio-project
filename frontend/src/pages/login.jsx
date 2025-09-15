@@ -18,13 +18,12 @@ const Login = () => {
   const onSubmit = async (data) => {
     async function LoggedIn() {
       try {
-        const response = await loginUser(data);
-        console.log("response", response);
+        await loginUser(data);
+        const response = await axios.get("/api/auth/me");
         setUser(response.data.id.id);
-        console.log(user);
         navigate("/chat");
       } catch (error) {
-        console.log("something went wrong: ", error);
+        console.log(error);
       }
     }
     LoggedIn();

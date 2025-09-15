@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { registerUser } from "../store/actions/userAction";
+import { context } from "../wrapper";
+import axios from "../utils/axios";
 
 const Register = () => {
   const {
@@ -10,18 +12,20 @@ const Register = () => {
     formState: { errors },
     reset
   } = useForm();
-  const [responseMessage, setResponseMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const [user, setUser] = useContext(context);
 
   const onSubmit = async (data) => {
     try {
-      console.log(data)
-      const response = await registerUser(data);
+      await registerUser(data);
+      const res = await axios.get("/api/auth/me");
+      setUser(res.data.id.id);
       navigate("/chat");
       reset();
       
     } catch (error) {
-      setResponseMessage(error.response?.data?.message || "");
+      setErrorMessage(error.response?.data?.message || "");
     }
   };
 
@@ -96,7 +100,7 @@ const Register = () => {
             </form>
 
             <small>Already have Account <NavLink to="/login" className="text-sm underline font-bold text-blue-500">Login</NavLink> </small>
-            <p className="text-xl text-red-600">{responseMessage}</p>
+            <p className="text-xl text-red-600">{errorMessage}</p>
           </div>
       </div>
   );
