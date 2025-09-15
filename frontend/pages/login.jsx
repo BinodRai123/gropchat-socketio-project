@@ -1,6 +1,7 @@
 // src/Login.js
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { NavLink } from 'react-router-dom';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -43,6 +44,7 @@ const Login = () => {
             Login
           </button>
         </form>
+        <small>Don't have an Account: <NavLink to="/register" className="text-blue-800 text-sm underline">Register</NavLink></small>
       </div>
     </div>
   );
