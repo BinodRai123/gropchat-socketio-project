@@ -1,7 +1,9 @@
+require("dotenv").config();
 const app = require("./src/app");
 const { Server } = require("socket.io");
 const {createServer} = require("http")
 const{ instrument } = require("@socket.io/admin-ui");
+const connectToDB = require("./src/db/db");
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -35,6 +37,8 @@ io.on("connection", (socket) => {
   });
 });
 
+
+connectToDB();
 httpServer.listen(3000, () => {
   console.log("Server running on http://localhost:3000");
 });
