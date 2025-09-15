@@ -1,12 +1,11 @@
-import { useState } from "react"
+import { useContext } from "react";
+import { context } from "../wrapper";
+import { Navigate } from "react-router-dom";
 
-const authWrapper = () => {
-    const [token , setToken] = useState();
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const AuthWrapper = ({ children }) => {
+  const [user] = useContext(context);
 
-export default authWrapper
+  return user ? children : <Navigate to="/login" />;
+};
+
+export default AuthWrapper;

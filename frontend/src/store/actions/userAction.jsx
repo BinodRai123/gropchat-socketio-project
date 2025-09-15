@@ -5,8 +5,18 @@ export const registerUser = async ({userName, email, password}) => {
     return response;
 }
 
+
+export const isUserLoggedIn = async() => {
+    const response = await axios.get("/api/auth/me");
+    
+    return response;
+}
+
+
 export const loginUser = async({email, password}) => {
-    const response = await axios.post("/api/auth/login", {email, password});
+    await axios.post("/api/auth/login", {email, password});
+
+    const response = await isUserLoggedIn();
 
     return response;
 }

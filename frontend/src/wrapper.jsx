@@ -1,28 +1,32 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import axios from "./utils/axios";
+import { isUserLoggedIn } from "./store/actions/userAction";
 
 export const context = createContext(null);
-import { useEffect } from "react";
-import axios from "./utils/axios";
 
-const Wrapper = (props) => {
-  const [user, setUser] = useState();
+const Wrapper = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  //Is user logged in or not 
   useEffect(() => {
-    axios.get("/api/auth/me")
-      .then((res) => {
-        setUser(res.data.id.id);
-      })
-      .catch((err) => {
-        console.log("Not logged in");
-    });
+    async function fetchUser() {
+      try {
+        const response = await isUserLoggedIn();
+        setUser(response.data.id.id);
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  }, [])
+    fetchUser();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <>
-      <context.Provider value={user}>{props.children}</context.Provider>
-    </>
+    <context.Provider value={[user, setUser]}>{children}</context.Provider>
   );
 };
 
