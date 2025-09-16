@@ -14,12 +14,12 @@ function FriendList({ friends , userId }) {
   return (
     <div className="flex">
       <div className="w-1/3 border-r">
-        {/* {friends.map(f => (
-          <div key={f.id} className="p-2 cursor-pointer hover:bg-gray-200"
-            onClick={() => startChat(f.id, f.name)}>
-            {f.name}
+        {friends.map((friend,id) => (
+          <div key={id} className="p-2 cursor-pointer hover:bg-gray-200"
+            onClick={() => startChat(friend.id, friend.name)}>
+            {friend.name}
           </div>
-        ))} */}
+        ))}
       </div>
 
       <div className="w-2/3">

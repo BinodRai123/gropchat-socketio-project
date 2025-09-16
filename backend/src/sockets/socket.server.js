@@ -42,10 +42,12 @@ function initSocketServer(httpServer) {
     const user = socket.user;
     onlineUsers.set(user._id.toString(), { name: user.userName });
 
-    const onlineUserArray = Array.from(onlineUsers.entries()).map(([id, data]) => ({
-      _id: id,
-      name: data.name,
-    }));
+    const onlineUserArray = Array.from(onlineUsers.entries()).map(
+      ([id, data]) => ({
+        _id: id,
+        name: data.name,
+      })
+    );
 
     /* send current online friends */
     io.emit("online_users", onlineUserArray);
@@ -64,8 +66,16 @@ function initSocketServer(httpServer) {
     });
 
     socket.on("disconnect", () => {
-      onlineUsers.delete(user._id);
-      io.emit("online_users", Array.from(onlineUsers.keys()));
+      onlineUsers.delete(user._id.toString());
+
+      const onlineUserArray = Array.from(onlineUsers.entries()).map(
+        ([id, data]) => ({
+          _id: id,
+          name: data.name,
+        })
+      );
+
+      io.emit("online_users", onlineUserArray);
       console.log("A user disconnected:", socket.id);
     });
   });
