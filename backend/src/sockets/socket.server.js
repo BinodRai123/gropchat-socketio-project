@@ -32,7 +32,6 @@ function initSocketServer(httpServer) {
     }
   })
 
-
   io.on("connection", async (socket) => {
     console.log("A user connected:", socket.id);
     console.log(socket.user.userName)
