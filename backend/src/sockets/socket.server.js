@@ -22,7 +22,7 @@ function initSocketServer(httpServer) {
     try {
       const decoded = jwt.verify(cookies.token, process.env.JWT_SECRET_KEY);
 
-      const user = await userModel.findOne({_id: decoded.id});
+      const user = await userModel.findOne({_id: decoded.id}).select("-password -__v");
       socket.user = user;
 
       next();
