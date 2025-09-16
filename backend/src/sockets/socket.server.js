@@ -54,16 +54,20 @@ function initSocketServer(httpServer) {
     console.log("Online Users:", onlineUserArray);
 
     /* --Join Room of two user-- */
-    socket.on("join_chat", (chatId) => {
+    socket.on("join_chat", async (chatId) => {
       socket.join(chatId);
+      const messages = await messageModel.find({chatId});
       console.log(`user ${socket.user.userName} joined chat ${chatId}`);
+
+      io.to(chatId).emit("all_messages", messages);
     });
 
     /* --send message to chat-- */
     socket.on("send_message", async ({ chatId, senderId, text }) => {
       const message = await messageModel.create({ senderId, chatId, text });
-      io.to(chatId).emit("receive message", message);
+      io.to(chatId).emit("receive_message", message);
     });
+
 
     socket.on("disconnect", () => {
       onlineUsers.delete(user._id.toString());

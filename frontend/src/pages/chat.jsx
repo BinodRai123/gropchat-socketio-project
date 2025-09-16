@@ -23,7 +23,7 @@ const Chat = () => {
 
   return (
     <>
-      <FriendList friends={onlineFriends}/>
+      <FriendList friends={onlineFriends} userId={String(user)}/>
     </>
   );
 };
