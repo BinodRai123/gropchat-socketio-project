@@ -1,7 +1,8 @@
 const { Server } = require("socket.io");
+const userModel = require("../models/user.model");
+const messageModel = require("../models/message.model");
 const cookie = require("cookie");
 const jwt = require("jsonwebtoken");
-const userModel = require("../models/user.model");
 
 function initSocketServer(httpServer) {
   const io = new Server(httpServer, {
@@ -34,15 +35,20 @@ function initSocketServer(httpServer) {
 
   io.on("connection", async (socket) => {
     console.log("A user connected:", socket.id);
-    console.log(socket.user.userName)
 
-    // listen for chat messages
-    socket.on("chatMessage", (msg) => {
-      console.log("Message:", msg);
+    /* --Join Room of two user-- */
+    socket.on("join_chat",(chatId) => {
+      socket.join(chatId);
+      console.log(`user ${socket.user.userName} joined chat ${chatId}`);
+    })
 
-      // broadcast to all clients
-      io.emit("chatMessage", msg);
-    });
+    /* --send message to chat-- */
+    socket.on("send_message", async({chatId, senderId, text}) => {
+      const message = await messageModel.create({senderId, chatId, text});
+      io.to(chatId).emit("receive message", message);
+    })
+
+    
 
     socket.on("disconnect", () => {
       console.log("A user disconnected:", socket.id);
