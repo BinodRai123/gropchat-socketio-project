@@ -28,8 +28,10 @@ function ChatWindow({ chatId, friendName, userId }) {
     if (!text.trim()) {
       return console.warn("write something");
     }
-    socket.emit("send_message", { chatId, senderId: userId, text });
-    setMessages;
+    
+    const newMessage = { chatId, senderId: userId, text };
+
+    socket.emit("send_message", newMessage);
     setText("");
   };
 
