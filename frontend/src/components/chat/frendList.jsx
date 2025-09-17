@@ -2,37 +2,36 @@ import { useState } from "react";
 import axios from "../../utils/axios";
 import ChatWindow from "./chatWindow";
 
-function FriendList({ friends , userId }) {
-  const [activeChat, setActiveChat] = useState(null);
-
-  const startChat = async (friendId, friendName) => {
-    const res = await axios.post("/api/chat",{ userId, friendId }, {Credential: true});
-    const chat = res;
-    setActiveChat({ chatId: chat.data._id, friendName, friendId });
+const FrendList = ({ friends, userId }) => {
+  const[activeChat, setActiveChat] = useState(null);
+  const handleChatRoom = async (friendId, friendName) => {
+    const chat = await axios.post("/api/chat", { friendId, userId });
+    setActiveChat({ chatId: chat.data._id, friendName: friendName });
   };
 
   return (
-    <div className="flex">
-      <div className="w-1/3 border-r">
-        {friends.map((friend,id) => (
-          <div key={id} className="p-2 cursor-pointer hover:bg-gray-200"
-            onClick={() => startChat(friend._id, friend.name)}>
+    <div>
+      <ul className="w-20 select-none">
+        {friends.map((friend, id) => (
+          <li
+            key={id}
+            className="bg-gray-500 px-5 py-2 cursor-pointer active:bg-gray-400"
+            onClick={() => handleChatRoom(friend._id, friend.name)}
+          >
             {friend.name}
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
 
-      <div className="w-2/3">
-        {activeChat && (
-          <ChatWindow
-            chatId={activeChat.chatId}
-            friendName={activeChat.friendName}
-            userId={userId}
-          />
-        )}
-      </div>
+      {activeChat && (
+        <ChatWindow
+          chatId={activeChat.chatId}
+          friendName={activeChat.friendName}
+          userId={userId}
+        />
+      )}
     </div>
   );
-}
+};
 
-export default FriendList;
+export default FrendList;

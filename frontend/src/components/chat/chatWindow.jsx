@@ -8,45 +8,66 @@ function ChatWindow({ chatId, friendName, userId }) {
   useEffect(() => {
     socket.emit("join_chat", chatId);
 
-    socket.on("receive_message", (msg) => {
-      if (msg.chatId === chatId) {
-        setMessages(prev => [...prev, msg]);
-      }
+    socket.on("all_messages", (messages) => {
+      setMessages(messages);
     });
 
-    socket.on("all_messages",(messages) => {
-        setMessages(messages)
-    })
+    socket.on("receive_message", (message) => {
+      console.log(message);
+      setMessages((prev) => [...prev, message]);
+    });
+  }, []);
 
-    return () => {
-      socket.off("receive_message");
-    };
-  }, [chatId]);
+  useEffect(() => {
 
-  const sendMessage = () => {
-    if(!text.trim()){
-        return console.warn("write something");
+  }, [])
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (!text.trim()) {
+      return console.warn("write something");
     }
     socket.emit("send_message", { chatId, senderId: userId, text });
+    setMessages;
     setText("");
   };
 
   return (
     <div>
       <h2 className="font-bold">Chat with {friendName}</h2>
-      <div className="h-64 overflow-y-auto border my-2 p-2 ">
-        {messages.map((message, i) => (
-          <p key={i}><b>{message.senderId === userId ? "Me" : friendName}:</b> {message.text}</p>
+      <ul className="h-64 overflow-y-auto border my-2 p-2 ">
+        {messages.map((message, id) => (
+          <div
+            key={id}
+            className={`flex mb-2 ${
+              message.senderId === userId ? "justify-end" : "justify-start"
+            }`}
+          >
+            <p
+              className={`w-fit max-w-xs px-4 py-2 rounded-2xl ${
+                message.senderId === userId
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-500 text-white"
+              }`}
+            >
+              <span className="block font-semibold">
+                {message.senderId === userId ? "Me" : friendName}
+              </span>
+              {message.text}
+            </p>
+          </div>
         ))}
-      </div>
-      <div className="flex">
+      </ul>
+      <form onSubmit={handleSendMessage} className="flex">
         <input
           className="border flex-grow p-1"
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button onClick={sendMessage} className="bg-blue-500 text-white px-3 ml-2">Send</button>
-      </div>
+        <button type="submit" className="bg-blue-500 text-white px-3 ml-2">
+          Send
+        </button>
+      </form>
     </div>
   );
 }
