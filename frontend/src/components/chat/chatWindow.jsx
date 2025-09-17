@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import socket from "../../utils/socket";
 
 function ChatWindow({ chatId, friendName, userId }) {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     socket.emit("join_chat", chatId);
@@ -19,8 +20,8 @@ function ChatWindow({ chatId, friendName, userId }) {
   }, []);
 
   useEffect(() => {
-
-  }, [])
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -57,6 +58,7 @@ function ChatWindow({ chatId, friendName, userId }) {
             </p>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </ul>
       <form onSubmit={handleSendMessage} className="flex">
         <input
