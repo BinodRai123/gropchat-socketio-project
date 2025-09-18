@@ -3,14 +3,14 @@ import axios from "../../utils/axios";
 import ChatWindow from "./chatWindow";
 
 const FrendList = ({ friends, userId }) => {
-  const[activeChat, setActiveChat] = useState(null);
+  const [activeChat, setActiveChat] = useState(null);
   const handleChatRoom = async (friendId, friendName) => {
     const chat = await axios.post("/api/chat", { friendId, userId });
-    setActiveChat({ chatId: chat.data._id, friendName: friendName });
+    setActiveChat({ chatId: chat.data._id, friendId, friendName: friendName });
   };
 
   return (
-    <div>
+    <div className="flex w-full">
       <ul className="w-20 select-none">
         {friends.map((friend, id) => (
           <li

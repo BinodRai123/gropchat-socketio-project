@@ -9,10 +9,7 @@ async function  chatController(req, res){
 
   if (!chat) {
     chat = await chatModel.create({ members: [userId, friendId] });
-    return res.status(201).json({
-      message: "chat created sucessfully",
-      chat: chat,
-    });
+
   }
 
   res.status(200).json(chat);

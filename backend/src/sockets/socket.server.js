@@ -50,7 +50,7 @@ function initSocketServer(httpServer) {
     );
 
     /* send current online friends */
-    io.emit("online_users", onlineUserArray);
+    socket.emit("online_users", onlineUserArray);
     console.log("Online Users:", onlineUserArray);
 
     /* --Join Room of two user-- */
@@ -59,13 +59,16 @@ function initSocketServer(httpServer) {
       const messages = await messageModel.find({chatId});
       console.log(`user ${socket.user.userName} joined chat ${chatId}`);
 
-      io.to(chatId).emit("all_messages", messages);
+      socket.emit("all_messages", messages);
     });
 
     /* --send message to chat-- */
     socket.on("send_message", async ({ chatId, senderId, text }) => {
       const message = await messageModel.create({ senderId, chatId, text });
-      io.to(chatId).emit("receive_message", message);
+      socket.to(chatId).emit("receive_message", message);
+
+      socket.emit("receive_message", message);
+
     });
 
 
@@ -79,7 +82,7 @@ function initSocketServer(httpServer) {
         })
       );
 
-      io.emit("online_users", onlineUserArray);
+      socket.emit("online_users", onlineUserArray);
       console.log("A user disconnected:", socket.id);
     });
   });

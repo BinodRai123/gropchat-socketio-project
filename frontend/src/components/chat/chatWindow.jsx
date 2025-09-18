@@ -6,18 +6,30 @@ function ChatWindow({ chatId, friendName, userId }) {
   const [text, setText] = useState("");
   const messagesEndRef = useRef(null);
 
+  
   useEffect(() => {
     socket.emit("join_chat", chatId);
+    const handleAllMessages = (messages) => setMessages(messages);
+    const handleReceiveMessage = (msg) => {
+        if (msg.chatId === chatId) {
+          setMessages(prev => [...prev, msg]);
+        }
 
-    socket.on("all_messages", (messages) => {
-      setMessages(messages);
-    });
+        console.log(msg);
+      }
 
-    socket.on("receive_message", (message) => {
-      console.log(message);
-      setMessages((prev) => [...prev, message]);
-    });
-  }, []);
+    socket.on("all_messages", handleAllMessages);
+    socket.on("receive_message", handleReceiveMessage)
+
+    return () => {
+      socket.off("all_messages", handleAllMessages);
+      socket.off("receive_message", handleReceiveMessage);
+    };
+  }, [chatId]);
+
+  useEffect(() => {
+    setMessages([]); // clear when switching to new chat
+  }, [chatId]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -28,7 +40,7 @@ function ChatWindow({ chatId, friendName, userId }) {
     if (!text.trim()) {
       return console.warn("write something");
     }
-    
+
     const newMessage = { chatId, senderId: userId, text };
 
     socket.emit("send_message", newMessage);
@@ -36,7 +48,7 @@ function ChatWindow({ chatId, friendName, userId }) {
   };
 
   return (
-    <div>
+    <div className="flex-1">
       <h2 className="font-bold">Chat with {friendName}</h2>
       <ul className="h-64 overflow-y-auto border my-2 p-2 ">
         {messages.map((message, id) => (
