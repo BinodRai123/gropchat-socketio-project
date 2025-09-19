@@ -29,7 +29,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-900 text-white font-sans">
+    <div className="min-h-screen flex flex-col bg-[#0d1117] text-white font-sans">
       {/* Header */}
       <header className="flex items-center justify-between py-4 px-8 border-b border-gray-700">
         <div className="flex items-center space-x-2">
@@ -51,14 +51,19 @@ const Register = () => {
           <span className="font-bold text-xl">Connect</span>
         </div>
 
-        <button onClick={() => {navigate("/login")}} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
           Sign In
         </button>
       </header>
 
       {/* Main */}
       <main className="flex-grow flex items-center justify-center p-4">
-        <section className="p-8 bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+        <section className="p-8 bg-[#161b22] rounded-lg shadow-lg max-w-md w-full">
           <header className="mb-6 text-center">
             <h1 className="text-2xl font-bold">Create your account</h1>
             <p className="mt-2 text-gray-400">
@@ -67,57 +72,84 @@ const Register = () => {
           </header>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <input
-              {...register("email", {
-                required: "email is required",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Invalid email address",
-                },
-              })}
-              type="email"
-              placeholder="Email"
-              className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.email.message}
-              </p>
-            )}
+            <div>
+              <label
+                htmlFor="email"
+                className="mb-2 block text-sm font-medium text-gray-300"
+              >
+                Email
+              </label>
+              <input
+                {...register("email", {
+                  required: "email is required",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Invalid email address",
+                  },
+                })}
+                id="email"
+                type="email"
+                placeholder="Email"
+                className="w-full rounded-md border-[#30363d] bg-[#0d1117] px-4 py-2  focus:border-blue-500 border-2 outline-none"
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
 
-            <input
-              {...register("userName", { required: "Username is required" })}
-              type="text"
-              placeholder="Full name"
-              className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.userName && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.userName.message}
-              </p>
-            )}
+            <div>
+              <label
+                htmlFor="userName"
+                className="mb-2 block text-sm font-medium text-gray-300"
+              >
+                userName
+              </label>
+              <input
+                {...register("userName", { required: "Username is required" })}
+                id="userName"
+                type="text"
+                placeholder="Full name"
+                className="w-full rounded-md border-[#30363d] bg-[#0d1117] px-4 py-2  focus:border-blue-500 border-2 outline-none"
+              />
+              {errors.userName && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.userName.message}
+                </p>
+              )}
+            </div>
 
-            <input
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
-                },
-              })}
-              type="password"
-              placeholder="Password"
-              className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.password.message}
-              </p>
-            )}
+            <div>
+              <label
+                htmlFor="password"
+                className="mb-2 block text-sm font-medium text-gray-300"
+              >
+                password
+              </label>
+              <input
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
+                id="password"
+                type="password"
+                placeholder="Password"
+                className="w-full rounded-md border-[#30363d] bg-[#0d1117] px-4 py-2  focus:border-blue-500 border-2 outline-none"
+              />
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
 
             <button
               type="submit"
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-3 w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Create account
             </button>
@@ -126,14 +158,9 @@ const Register = () => {
           <footer className="my-6 text-center text-xs text-gray-500 leading-relaxed">
             <p>
               By signing up, you agree to our{" "}
-              <a className="text-blue-400 hover:underline">
-                Terms of Service
-              </a>{" "}
+              <a className="text-blue-400 hover:underline">Terms of Service</a>{" "}
               and{" "}
-              <a className="text-blue-400 hover:underline">
-                Privacy Policy
-              </a>
-              .
+              <a className="text-blue-400 hover:underline">Privacy Policy</a>.
             </p>
           </footer>
           {errorMessage && (
