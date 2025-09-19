@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import styles from "./Register.module.css";
 import { context } from "../wrapper";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../store/actions/userAction";
 import axios from "../utils/axios";
@@ -63,7 +63,7 @@ const Register = () => {
             <p>Join the conversation and connect with others.</p>
           </header>
 
-          <form onSubmit={handleSubmit(onsubmit)} className={styles.form}>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             <input
               {...register("email", {
                 required: "email is required",
@@ -119,7 +119,10 @@ const Register = () => {
               By signing up, you agree to our <a href="#">Terms of Service</a>{" "}
               and <a href="#">Privacy Policy</a>.
             </p>
+
           </footer>
+            <small>Already have Account <NavLink to="/login" className={styles.alreadyAccount}>Login</NavLink> </small>
+            <p className={styles.error}>{errorMessage}</p>
         </section>
       </main>
     </div>

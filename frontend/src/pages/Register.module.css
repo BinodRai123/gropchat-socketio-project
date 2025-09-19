@@ -39,7 +39,7 @@
 }
 
 .card {
-  @apply p-8 bg-gray-800 rounded-lg shadow-lg w-full max-w-md;
+  @apply p-8 bg-gray-800 rounded-lg shadow-lg max-w-md;
 }
 
 .cardHeader {
@@ -69,9 +69,14 @@
 
 /* ------------------- Footer ------------------- */
 .footer {
-  @apply mt-6 text-center text-xs text-gray-500 leading-relaxed;
+  @apply my-6 text-center text-xs text-gray-500 leading-relaxed;
 }
 
 .footer a {
   @apply text-blue-400 hover:underline;
+}
+
+/* ------------------ Already Account -------------------- */
+.alreadyAccount {
+  @apply text-[1.123rem] underline font-bold text-blue-500;
 }
