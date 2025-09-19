@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import styles from "./Register.module.css";
 import { context } from "../wrapper";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -30,13 +29,13 @@ const Register = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="min-h-screen flex flex-col bg-gray-900 text-white font-sans">
       {/* Header */}
-      <header className={styles.header}>
-        <div className={styles.logoContainer}>
-          <div className={styles.logo}>
+      <header className="flex items-center justify-between py-4 px-8 border-b border-gray-700">
+        <div className="flex items-center space-x-2">
+          <div className="h-6 w-6 bg-blue-500 rounded-lg flex items-center justify-center">
             <svg
-              className={styles.logoIcon}
+              className="h-4 w-4 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -49,21 +48,25 @@ const Register = () => {
               />
             </svg>
           </div>
-          <span className={styles.logoText}>Connect</span>
+          <span className="font-bold text-xl">Connect</span>
         </div>
 
-        <button className={styles.btnPrimary}>Sign In</button>
+        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          Sign In
+        </button>
       </header>
 
       {/* Main */}
-      <main className={styles.main}>
-        <section className={styles.card}>
-          <header className={styles.cardHeader}>
-            <h1>Create your account</h1>
-            <p>Join the conversation and connect with others.</p>
+      <main className="flex-grow flex items-center justify-center p-4">
+        <section className="p-8 bg-gray-800 rounded-lg shadow-lg max-w-md w-full">
+          <header className="mb-6 text-center">
+            <h1 className="text-2xl font-bold">Create your account</h1>
+            <p className="mt-2 text-gray-400">
+              Join the conversation and connect with others.
+            </p>
           </header>
 
-          <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <input
               {...register("email", {
                 required: "email is required",
@@ -74,24 +77,22 @@ const Register = () => {
               })}
               type="email"
               placeholder="Email"
-              className={styles.inputField}
+              className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && (
-              <p className={styles.error}>
-                {errors.email.message}
-              </p>
+              <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
             )}
+
             <input
               {...register("userName", { required: "Username is required" })}
               type="text"
               placeholder="Full name"
-              className={styles.inputField}
+              className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.userName && (
-              <p className={styles.error}>
-                {errors.userName.message}
-              </p>
+              <p className="mt-1 text-sm text-red-500">{errors.userName.message}</p>
             )}
+
             <input
               {...register("password", {
                 required: "Password is required",
@@ -101,28 +102,43 @@ const Register = () => {
                 },
               })}
               type="password"
-              placeholder="password"
-              className={styles.inputField}
+              placeholder="Password"
+              className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.password && (
-              <p className={styles.error}>
-                {errors.password.message}
-              </p>
+              <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
             )}
-            <button type="submit" className={`w-full ${styles.btnPrimary}`}>
+
+            <button
+              type="submit"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               Create account
             </button>
           </form>
 
-          <footer className={styles.footer}>
+          <footer className="my-6 text-center text-xs text-gray-500 leading-relaxed">
             <p>
-              By signing up, you agree to our <a href="#">Terms of Service</a>{" "}
-              and <a href="#">Privacy Policy</a>.
+              By signing up, you agree to our{" "}
+              <a href="#" className="text-blue-400 hover:underline">
+                Terms of Service
+              </a>{" "}
+              and{" "}
+              <a href="#" className="text-blue-400 hover:underline">
+                Privacy Policy
+              </a>
+              .
             </p>
-
           </footer>
-            <small>Already have Account <NavLink to="/login" className={styles.alreadyAccount}>Login</NavLink> </small>
-            <p className={styles.error}>{errorMessage}</p>
+
+          <small>
+            Already have Account{" "}
+            <NavLink className="text-[1rem] underline font-bold text-blue-500" to="/login">Login</NavLink>
+          </small>
+
+          {errorMessage && (
+            <p className="mt-2 text-sm text-red-500">{errorMessage}</p>
+          )}
         </section>
       </main>
     </div>
