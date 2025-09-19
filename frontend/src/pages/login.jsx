@@ -23,7 +23,8 @@ const Login = () => {
         setUser(response.data.id.id);
         navigate("/chat");
       } catch (error) {
-        console.log(error);
+        console.log(error.response?.data?.message);
+        setErrorMessage(error.response?.data?.message || "");
       }
     }
     LoggedIn();
@@ -31,7 +32,6 @@ const Login = () => {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#0d1117] text-white p-4">
-      {/* Container for the form */}
       <section className="w-full max-w-sm rounded-lg bg-[#161b22] p-8 shadow-xl md:max-w-md lg:max-w-lg">
         {/* Header section */}
         <header className="mb-8 text-center">
@@ -44,7 +44,7 @@ const Login = () => {
         </header>
 
         {/* Form section */}
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {/* Email input field */}
           <div className="mb-4">
             <label
@@ -54,13 +54,18 @@ const Login = () => {
               Email
             </label>
             <input
+              {...register("email", { required: "Email is required" })}
               type="email"
               id="email"
               name="email"
               placeholder="you@example.com"
-              className="w-full rounded-md border border-[#30363d] bg-[#0d1117] px-4 py-2 text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-              autoComplete="email"
+              className="w-full rounded-md border-[#30363d] bg-[#0d1117] px-4 py-2  focus:border-blue-500 border-2 outline-none"
             />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* Password input field */}
@@ -73,20 +78,36 @@ const Login = () => {
                 Password
               </label>
               <a
-                href="#"
-                className="text-sm font-medium text-blue-500 hover:underline"
+                onClick={() => {
+                  alert(
+                    "lado kha muji eauta password pani yaad garnu sakdinas"
+                  );
+                }}
+                className="text-sm font-medium text-blue-500 hover:underline cursor-pointer"
               >
                 Forgot password?
               </a>
             </div>
             <input
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
               type="password"
               id="password"
               name="password"
               placeholder="••••••••"
               className="w-full rounded-md border border-[#30363d] bg-[#0d1117] px-4 py-2 text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-              autoComplete="current-password"
             />
+
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Sign In button */}
@@ -97,16 +118,16 @@ const Login = () => {
             Sign In
           </button>
         </form>
+        <small className="block mt-4 mb-2">
+          Don't have an Account:{" "}
+          <NavLink to="/register" className="text-blue-800 text-sm underline">
+            Register
+          </NavLink>
+        </small>
+        <p className="text-xl text-red-500">{errorMessage}</p>
       </section>
     </main>
   );
 };
 
 export default Login;
-// <small>
-//   Don't have an Account:{" "}
-//   <NavLink to="/register" className="text-blue-800 text-sm underline">
-//     Register
-//   </NavLink>
-// </small>
-// <p className="text-xl text-red-500">{errorMessage}</p>
