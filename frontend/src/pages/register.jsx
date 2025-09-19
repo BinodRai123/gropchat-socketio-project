@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
-import { registerUser } from "../store/actions/userAction";
+import styles from "./Register.module.css";
 import { context } from "../wrapper";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { registerUser } from "../store/actions/userAction";
 import axios from "../utils/axios";
 
 const Register = () => {
@@ -10,7 +11,7 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
@@ -23,86 +24,105 @@ const Register = () => {
       setUser(res.data.id.id);
       navigate("/chat");
       reset();
-      
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "");
     }
   };
 
   return (
-      <div className="flex items-center justify-center bg-gray-100 h-screen p-5">
-          <div className="w-full max-w-md p-8 space-y-8 bg-white rounded shadow-md">
-            <h2 className="text-3xl font-bold text-center">Register</h2>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  {...register("userName", { required: "Username is required" })}
-                  className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                {errors.username && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.username.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^\S+@\S+$/i,
-                      message: "Invalid email address",
-                    },
-                  })}
-                  className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 6,
-                      message: "Password must be at least 6 characters",
-                    },
-                  })}
-                  className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                {errors.password && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
-              <button
-                type="submit"
-                className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                Register
-              </button>
-            </form>
-
-            <small>Already have Account <NavLink to="/login" className="text-sm underline font-bold text-blue-500">Login</NavLink> </small>
-            <p className="text-xl text-red-600">{errorMessage}</p>
+    <div className={styles.container}>
+      {/* Header */}
+      <header className={styles.header}>
+        <div className={styles.logoContainer}>
+          <div className={styles.logo}>
+            <svg
+              className={styles.logoIcon}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
           </div>
-      </div>
+          <span className={styles.logoText}>Connect</span>
+        </div>
+
+        <button className={styles.btnPrimary}>Sign In</button>
+      </header>
+
+      {/* Main */}
+      <main className={styles.main}>
+        <section className={styles.card}>
+          <header className={styles.cardHeader}>
+            <h1>Create your account</h1>
+            <p>Join the conversation and connect with others.</p>
+          </header>
+
+          <form onSubmit={handleSubmit(onsubmit)} className={styles.form}>
+            <input
+              {...register("email", {
+                required: "email is required",
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              type="email"
+              placeholder="Email"
+              className={styles.inputField}
+            />
+            {errors.email && (
+              <p className={styles.error}>
+                {errors.email.message}
+              </p>
+            )}
+            <input
+              {...register("userName", { required: "Username is required" })}
+              type="text"
+              placeholder="Full name"
+              className={styles.inputField}
+            />
+            {errors.userName && (
+              <p className={styles.error}>
+                {errors.userName.message}
+              </p>
+            )}
+            <input
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
+              type="password"
+              placeholder="password"
+              className={styles.inputField}
+            />
+            {errors.password && (
+              <p className={styles.error}>
+                {errors.password.message}
+              </p>
+            )}
+            <button type="submit" className={`w-full ${styles.btnPrimary}`}>
+              Create account
+            </button>
+          </form>
+
+          <footer className={styles.footer}>
+            <p>
+              By signing up, you agree to our <a href="#">Terms of Service</a>{" "}
+              and <a href="#">Privacy Policy</a>.
+            </p>
+          </footer>
+        </section>
+      </main>
+    </div>
   );
 };
 

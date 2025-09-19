@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------- Container ------------------- */
+.container {
+  @apply min-h-screen flex flex-col bg-gray-900 text-white font-sans;
+}
+
+/* ------------------- Header ------------------- */
+.header {
+  @apply flex items-center justify-between py-4 px-8 border-b border-gray-700;
+}
+
+.logoContainer {
+  @apply flex items-center space-x-2;
+}
+
+.logo {
+  @apply h-6 w-6 bg-blue-500 rounded-lg flex items-center justify-center;
+}
+
+.logoIcon {
+  @apply h-4 w-4 text-white;
+}
+
+.logoText {
+  @apply font-bold text-xl;
+}
+
+/* ------------------- Buttons ------------------- */
+.btnPrimary {
+  @apply px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+/* ------------------- Main / Card ------------------- */
+.main {
+  @apply flex-grow flex items-center justify-center p-4;
+}
+
+.card {
+  @apply p-8 bg-gray-800 rounded-lg shadow-lg w-full max-w-md;
+}
+
+.cardHeader {
+  @apply mb-6 text-center;
+}
+
+.cardHeader h1 {
+  @apply text-2xl font-bold;
+}
+
+.cardHeader p {
+  @apply mt-2 text-gray-400;
+}
+
+/* ------------------- Form ------------------- */
+.form {
+  @apply space-y-4;
+}
+
+.error{
+  @apply mt-1 text-sm text-red-500;
+}
+
+.inputField {
+  @apply w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+/* ------------------- Footer ------------------- */
+.footer {
+  @apply mt-6 text-center text-xs text-gray-500 leading-relaxed;
+}
+
+.footer a {
+  @apply text-blue-400 hover:underline;
+}

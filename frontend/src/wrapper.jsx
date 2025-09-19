@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "./utils/axios";
 import { isUserLoggedIn } from "./store/actions/userAction";
 
 export const context = createContext(null);
