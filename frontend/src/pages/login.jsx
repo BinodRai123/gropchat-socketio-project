@@ -30,59 +30,83 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded shadow-md">
-        <h2 className="text-3xl font-bold text-center">Login</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
+    <main className="flex min-h-screen items-center justify-center bg-[#0d1117] text-white p-4">
+      {/* Container for the form */}
+      <section className="w-full max-w-sm rounded-lg bg-[#161b22] p-8 shadow-xl md:max-w-md lg:max-w-lg">
+        {/* Header section */}
+        <header className="mb-8 text-center">
+          <h1 className="text-3xl font-semibold text-white">
+            Sign in to your account
+          </h1>
+          <p className="mt-2 text-sm text-gray-400">
+            Welcome back! Please enter your details.
+          </p>
+        </header>
+
+        {/* Form section */}
+        <form>
+          {/* Email input field */}
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="mb-2 block text-sm font-medium text-gray-300"
+            >
               Email
             </label>
             <input
               type="email"
-              {...register("email", { required: "Email is required" })}
-              className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              className="w-full rounded-md border border-[#30363d] bg-[#0d1117] px-4 py-2 text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              autoComplete="email"
             />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.email.message}
-              </p>
-            )}
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
+          {/* Password input field */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="password"
+                className="mb-2 block text-sm font-medium text-gray-300"
+              >
+                Password
+              </label>
+              <a
+                href="#"
+                className="text-sm font-medium text-blue-500 hover:underline"
+              >
+                Forgot password?
+              </a>
+            </div>
             <input
               type="password"
-              {...register("password", { required: "Password is required" })}
-              className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              className="w-full rounded-md border border-[#30363d] bg-[#0d1117] px-4 py-2 text-gray-200 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              autoComplete="current-password"
             />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.password.message}
-              </p>
-            )}
           </div>
 
+          {/* Sign In button */}
           <button
             type="submit"
-            className="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-md bg-blue-600 py-2 font-semibold text-white transition duration-200 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-600 focus:ring-opacity-50"
           >
-            Login
+            Sign In
           </button>
         </form>
-        <small>
-          Don't have an Account:{" "}
-          <NavLink to="/register" className="text-blue-800 text-sm underline">
-            Register
-          </NavLink>
-        </small>
-        <p className="text-xl text-red-500">{errorMessage}</p>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
 export default Login;
+// <small>
+//   Don't have an Account:{" "}
+//   <NavLink to="/register" className="text-blue-800 text-sm underline">
+//     Register
+//   </NavLink>
+// </small>
+// <p className="text-xl text-red-500">{errorMessage}</p>

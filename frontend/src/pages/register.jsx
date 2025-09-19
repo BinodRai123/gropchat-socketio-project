@@ -51,7 +51,7 @@ const Register = () => {
           <span className="font-bold text-xl">Connect</span>
         </div>
 
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button onClick={() => {navigate("/login")}} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
           Sign In
         </button>
       </header>
@@ -80,7 +80,9 @@ const Register = () => {
               className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {errors.email.message}
+              </p>
             )}
 
             <input
@@ -90,7 +92,9 @@ const Register = () => {
               className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.userName && (
-              <p className="mt-1 text-sm text-red-500">{errors.userName.message}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {errors.userName.message}
+              </p>
             )}
 
             <input
@@ -106,7 +110,9 @@ const Register = () => {
               className="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.password && (
-              <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {errors.password.message}
+              </p>
             )}
 
             <button
@@ -120,22 +126,16 @@ const Register = () => {
           <footer className="my-6 text-center text-xs text-gray-500 leading-relaxed">
             <p>
               By signing up, you agree to our{" "}
-              <a href="#" className="text-blue-400 hover:underline">
+              <a className="text-blue-400 hover:underline">
                 Terms of Service
               </a>{" "}
               and{" "}
-              <a href="#" className="text-blue-400 hover:underline">
+              <a className="text-blue-400 hover:underline">
                 Privacy Policy
               </a>
               .
             </p>
           </footer>
-
-          <small>
-            Already have Account{" "}
-            <NavLink className="text-[1rem] underline font-bold text-blue-500" to="/login">Login</NavLink>
-          </small>
-
           {errorMessage && (
             <p className="mt-2 text-sm text-red-500">{errorMessage}</p>
           )}
