@@ -42,6 +42,7 @@ function initSocketServer(httpServer) {
     const user = socket.user;
     onlineUsers.set(user._id.toString(), {
       name: user.userName,
+      profileImage: user.profileImage,
       time: new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -52,6 +53,7 @@ function initSocketServer(httpServer) {
       ([id, data]) => ({
         _id: id,
         name: data.name,
+        profileImage: data.profileImage,
         time: data.time, // include time
       })
     );

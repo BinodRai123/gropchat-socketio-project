@@ -69,7 +69,8 @@ async function authLogin(req, res){
         user:{
             userName:user.userName,
             email: user.email,
-            password: user.password
+            password: user.password,
+            profileImage: user.profileImage
         }
     })
 }

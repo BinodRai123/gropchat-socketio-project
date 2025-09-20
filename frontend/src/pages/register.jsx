@@ -21,7 +21,7 @@ const Register = () => {
       await registerUser(data);
       const res = await axios.get("/api/auth/me");
       setUser(res.data.id.id);
-      navigate("/chat");
+      navigate("/profileImage");
       reset();
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "");

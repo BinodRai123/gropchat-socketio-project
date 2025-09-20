@@ -13,6 +13,7 @@ const Chat = () => {
       const friendsOnly = friends.filter(
         (friend) => friend._id !== String(user)
       );
+      console.log(friendsOnly)
       setOnlineFriends(friendsOnly);
     };
     
