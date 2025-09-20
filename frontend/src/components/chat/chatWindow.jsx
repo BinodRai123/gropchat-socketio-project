@@ -50,7 +50,7 @@ function ChatWindow({ chatId, friendName, userId }) {
   return (
     <section className="flex-1 flex flex-col">
       {/* Header */}
-      <header className="flex items-center justify-between p-2 border-b border-gray-800 bg-[#161b22]">
+      <header className="flex items-center justify-between py-2 px-4 border-b border-gray-800 bg-[#161b22]">
         <div className="flex items-center gap-3">
           <img
             // src="https://via.placeholder.com/40"

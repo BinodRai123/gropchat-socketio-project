@@ -5,6 +5,8 @@ import { FiSearch } from "react-icons/fi";
 
 const FrendList = ({ friends, userId }) => {
   const [activeChat, setActiveChat] = useState(null);
+  console.log(activeChat);
+
   const handleChatRoom = async (friendId, friendName) => {
     const chat = await axios.post("/api/chat", { friendId, userId });
     setActiveChat({ chatId: chat.data._id, friendId, friendName: friendName });
@@ -48,7 +50,12 @@ const FrendList = ({ friends, userId }) => {
             {friends.map((friend, id) => (
               <li
                 key={id}
-                className="flex items-center gap-3 px-4 py-3 cursor-pointer bg-[#1d232a] hover:bg-[#20262d]"
+                className={`flex items-center gap-3 px-4 py-3 cursor-pointer 
+                ${
+                  activeChat?.friendName === friend.name
+                    ? "bg-blue-900" // highlighted style
+                    : "bg-[#1d232a] hover:bg-[#20262d]"
+                }`}
                 onClick={() => handleChatRoom(friend._id, friend.name)}
               >
                 <img
@@ -60,7 +67,7 @@ const FrendList = ({ friends, userId }) => {
                   <p className="font-medium text-sm">{friend.name}</p>
                   <span className="text-xs text-green-400">online</span>
                 </div>
-                  <time className="text-xs text-gray-400">{friend.time}</time>
+                <time className="text-xs text-gray-400">{friend.time}</time>
               </li>
             ))}
           </ul>
