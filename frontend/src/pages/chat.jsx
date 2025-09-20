@@ -15,6 +15,7 @@ const Chat = () => {
       );
       setOnlineFriends(friendsOnly);
     };
+    
 
     socket.on("online_users", handleOnlineUsers);
 
@@ -26,7 +27,9 @@ const Chat = () => {
 
   return (
     <>
-      <FriendList friends={onlineFriends} userId={String(user)} />
+      <div className="flex min-h-screen bg-[#0d1117] text-white">
+        <FriendList friends={onlineFriends} userId={String(user)} />
+      </div>
     </>
   );
 };

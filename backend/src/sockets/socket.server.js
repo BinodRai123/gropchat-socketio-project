@@ -40,24 +40,36 @@ function initSocketServer(httpServer) {
     console.log("A user connected:", socket.id);
 
     const user = socket.user;
-    onlineUsers.set(user._id.toString(), { name: user.userName });
+    onlineUsers.set(user._id.toString(), {
+      name: user.userName,
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    });
 
     const onlineUserArray = Array.from(onlineUsers.entries()).map(
       ([id, data]) => ({
         _id: id,
         name: data.name,
+        time: data.time, // include time
       })
     );
 
     /* send current online friends */
-    socket.emit("online_users", onlineUserArray);
+    io.emit("online_users", onlineUserArray);
     console.log("Online Users:", onlineUserArray);
 
     /* --Join Room of two user-- */
     socket.on("join_chat", async (chatId) => {
       socket.join(chatId);
-      const messages = await messageModel.find({chatId});
-      console.log(`user ${socket.user.userName} joined chat ${chatId}`);
+      const messages = (
+        await messageModel
+          .find({ chatId })
+          .sort({ createdAt: -1 })
+          .limit(10)
+          .lean()
+      ).reverse();
 
       socket.emit("all_messages", messages);
     });
@@ -68,9 +80,7 @@ function initSocketServer(httpServer) {
       socket.to(chatId).emit("receive_message", message);
 
       socket.emit("receive_message", message);
-
     });
-
 
     socket.on("disconnect", () => {
       onlineUsers.delete(user._id.toString());
@@ -82,7 +92,7 @@ function initSocketServer(httpServer) {
         })
       );
 
-      socket.emit("online_users", onlineUserArray);
+      io.emit("online_users", onlineUserArray);
       console.log("A user disconnected:", socket.id);
     });
   });
