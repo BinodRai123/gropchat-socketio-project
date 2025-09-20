@@ -7,9 +7,9 @@ const FrendList = ({ friends, userId }) => {
   const [activeChat, setActiveChat] = useState(null);
   console.log(activeChat);
 
-  const handleChatRoom = async (friendId, friendName) => {
+  const handleChatRoom = async (friendId, friendName, image) => {
     const chat = await axios.post("/api/chat", { friendId, userId });
-    setActiveChat({ chatId: chat.data._id, friendId, friendName: friendName });
+    setActiveChat({ chatId: chat.data._id, friendId, friendName: friendName, friendImage: image });
   };
 
   return (
@@ -34,19 +34,6 @@ const FrendList = ({ friends, userId }) => {
         {/* Friend List */}
         <nav className="flex-1 overflow-y-auto">
           <ul>
-            <li className="flex items-center gap-3 px-4 py-3 cursor-pointer bg-[#1d232a] hover:bg-[#20262d]">
-              <img
-                src="https://via.placeholder.com/40"
-                alt="profile"
-                className="w-10 h-10 rounded-full"
-              />
-              <div className="flex-1">
-                <p className="font-medium text-sm">Liam Carter</p>
-                <span className="text-xs text-green-400">online</span>
-              </div>
-              <time className="text-xs text-gray-400">10:06 AM</time>
-            </li>
-
             {friends.map((friend, id) => (
               <li
                 key={id}
@@ -56,10 +43,10 @@ const FrendList = ({ friends, userId }) => {
                     ? "bg-blue-900" // highlighted style
                     : "bg-[#1d232a] hover:bg-[#20262d]"
                 }`}
-                onClick={() => handleChatRoom(friend._id, friend.name)}
+                onClick={() => handleChatRoom(friend._id, friend.name, friend.profileImage)}
               >
                 <img
-                  src={friend?.image}
+                  src={friend?.profileImage}
                   alt="profile"
                   className="w-10 h-10 rounded-full"
                 />
@@ -79,6 +66,7 @@ const FrendList = ({ friends, userId }) => {
           chatId={activeChat.chatId}
           friendName={activeChat.friendName}
           userId={userId}
+          friendImage={activeChat.friendImage}
         />
       )}
     </div>

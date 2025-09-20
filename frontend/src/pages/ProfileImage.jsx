@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../utils/crop";
 import axios from "../utils/axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileImageUpload() {
   const [image, setImage] = useState(null);
@@ -10,6 +11,7 @@ export default function ProfileImageUpload() {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onCropComplete = useCallback((_, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
@@ -42,6 +44,7 @@ export default function ProfileImageUpload() {
       const { data } = await axios.post("/api/uploadImage", formData);
 
       setCroppedImage(cropped);
+      navigate("/chat")
     } catch (e) {
       console.error(e);
     } finally {

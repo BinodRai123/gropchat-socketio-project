@@ -54,7 +54,7 @@ function initSocketServer(httpServer) {
         _id: id,
         name: data.name,
         profileImage: data.profileImage,
-        time: data.time, // include time
+        time: data.time,
       })
     );
 
@@ -91,6 +91,8 @@ function initSocketServer(httpServer) {
         ([id, data]) => ({
           _id: id,
           name: data.name,
+          profileImage: data.profileImage,
+          time: data.time,
         })
       );
 

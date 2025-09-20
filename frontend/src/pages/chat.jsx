@@ -17,8 +17,9 @@ const Chat = () => {
       setOnlineFriends(friendsOnly);
     };
     
-
+    socket.connect();
     socket.on("online_users", handleOnlineUsers);
+    console.log("render one time ")
 
     return () => {
       socket.off("online_users", handleOnlineUsers);

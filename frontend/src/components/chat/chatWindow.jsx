@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import socket from "../../utils/socket";
 import { FiPhone, FiVideo, FiMoreVertical } from "react-icons/fi";
 
-function ChatWindow({ chatId, friendName, userId }) {
+function ChatWindow({ chatId, friendName, userId, friendImage }) {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const messagesEndRef = useRef(null);
@@ -53,7 +53,7 @@ function ChatWindow({ chatId, friendName, userId }) {
       <header className="flex items-center justify-between py-2 px-4 border-b border-gray-800 bg-[#161b22]">
         <div className="flex items-center gap-3">
           <img
-            // src="https://via.placeholder.com/40"
+            src={friendImage}
             alt="profile"
             className="w-10 h-10 rounded-full"
           />
