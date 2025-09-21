@@ -1,7 +1,7 @@
 import axios from "axios"; 
 
 const instance = axios.create({
-    baseURL: "https://gropchat-socketio-project.onrender.com/",
+    baseURL: "https://gropchat-socketio-project.onrender.com",
     withCredentials: true
 });
 
