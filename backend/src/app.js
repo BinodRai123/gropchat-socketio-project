@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const path = require("path");
 
 /* ---Calling Routes--- */
 const userAuthRoutes = require("../src/routes/auth.routes");
@@ -16,6 +17,7 @@ app.use(cors({
     origin: "http://localhost:5173", // your React URL
     credentials: true,
 }));
+app.use(express.static(path.join(__dirname, '../public')))
 
 /* ---Routes--- */
 app.use("/api/auth", userAuthRoutes);
