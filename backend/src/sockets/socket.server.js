@@ -60,7 +60,6 @@ function initSocketServer(httpServer) {
 
     /* send current online friends */
     io.emit("online_users", onlineUserArray);
-    console.log("Online Users:", onlineUserArray);
 
     /* --Join Room of two user-- */
     socket.on("join_chat", async (chatId) => {

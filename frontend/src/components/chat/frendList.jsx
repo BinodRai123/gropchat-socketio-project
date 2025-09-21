@@ -5,7 +5,6 @@ import { FiSearch } from "react-icons/fi";
 
 const FrendList = ({ friends, userId }) => {
   const [activeChat, setActiveChat] = useState(null);
-  console.log(activeChat);
 
   const handleChatRoom = async (friendId, friendName, image) => {
     const chat = await axios.post("/api/chat", { friendId, userId });

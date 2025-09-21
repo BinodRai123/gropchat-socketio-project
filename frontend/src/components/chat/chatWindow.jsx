@@ -14,8 +14,6 @@ function ChatWindow({ chatId, friendName, userId, friendImage }) {
       if (msg.chatId === chatId) {
         setMessages((prev) => [...prev, msg]);
       }
-
-      console.log(msg);
     };
 
     socket.on("all_messages", handleAllMessages);
