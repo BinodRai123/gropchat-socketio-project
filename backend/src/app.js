@@ -24,4 +24,8 @@ app.use("/api/auth", userAuthRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/uploadImage", uploadImage);
 
+app.get("*name", (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+})
+
 module.exports = app;
