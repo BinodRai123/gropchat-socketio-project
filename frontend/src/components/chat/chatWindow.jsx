@@ -102,6 +102,7 @@ function ChatWindow({ chatId, friendName, userId, friendImage }) {
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSendMessage(e)}
+            maxLength={600}
           />
           <button
             type="submit"
