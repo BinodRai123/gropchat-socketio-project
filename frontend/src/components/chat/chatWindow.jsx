@@ -93,7 +93,7 @@ function ChatWindow({ chatId, friendName, userId, friendImage }) {
       </div>
 
       {/* Input */}
-      <footer className="p-4 border-t border-gray-800 bg-[#161b22]">
+      {chatId && <footer className="p-4 border-t border-gray-800 bg-[#161b22]">
         <form onSubmit={handleSendMessage} className="flex items-center gap-3">
           <input
             type="text"
@@ -111,7 +111,7 @@ function ChatWindow({ chatId, friendName, userId, friendImage }) {
             <img src="./src/assets/send.svg" className="size-12 pl-1" alt="" />
           </button>
         </form>
-      </footer>
+      </footer>}
     </section>
   );
 }
