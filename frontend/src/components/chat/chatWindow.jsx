@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import socket from "../../utils/socket";
 import { FiPhone, FiVideo, FiMoreVertical } from "react-icons/fi";
 
-function ChatWindow({ chatId, friendName, userId, friendImage }) {
+const ChatWindow = React.memo(function({ chatId, friendName, userId, friendImage }) {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const messagesEndRef = useRef(null);
+  console.log("renderered");
 
   useEffect(() => {
     socket.emit("join_chat", chatId);
@@ -114,6 +115,6 @@ function ChatWindow({ chatId, friendName, userId, friendImage }) {
       </footer>}
     </section>
   );
-}
+})
 
 export default ChatWindow;
